@@ -42,7 +42,10 @@ int main(void)
 	
 	// Lancement chronomètre
 	Chrono_Start(); 
-  
+
+  SPI1->CR1 |= SPI_CR1_CPOL;
+  SPI1->CR1 &= ~(SPI_CR1_DFF);
+  USART1->CR2 |= ~(USART_CR2_STOP_0) & USART_CR2_STOP_1 & USART_CR2_STOP_Msk;
   /* Infinite loop */
   while (1)
   {
