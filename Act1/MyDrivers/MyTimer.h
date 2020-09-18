@@ -19,6 +19,7 @@ Driver pour Timer 1 à 4 du STM32F103RB
   * @retval None
   */
 void MyTimer_Conf(TIM_TypeDef * Timer,int Arr, int Psc);
+//Activer l'horloge avec la bonne fréquence (prescaler)
 
 
 /**
