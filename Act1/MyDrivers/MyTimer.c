@@ -11,7 +11,6 @@
  
 */ 
 #include "stm32f103xb.h" 
-#include "stm32f103xb.h" 
 
 void MyTimer_Start(TIM_TypeDef * Timer)
 {

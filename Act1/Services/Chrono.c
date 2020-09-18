@@ -57,7 +57,7 @@ void Chrono_Conf(TIM_TypeDef * Timer)
   */
 void Chrono_Start(void)
 {
-	//MyTimer_Start(..);
+	MyTimer_Start(Chrono_Timer);
 }
 
 
