@@ -70,10 +70,19 @@ void MyTimer_Conf(TIM_TypeDef * Timer,int Arr, int Psc) {
 		// On active l'horloge du timer 1
 		RCC->APB2ENR |= RCC_APB2ENR_IOPAEN ;
 	}
-	else if (Timer == TIM2 || Timer == TIM3 || Timer == TIM4 ) {
-		// On active l'horloge des timers 2,3,4
+	else if (Timer == TIM2 ) {
+		// On active l'horloge des timers 2
 		RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
 	}
+	else if (Timer == TIM3) {
+		// On active l'horloge des timers 3
+		RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
+	}
+	else if (Timer == TIM4) {
+		// On active l'horloge des timers 4
+		RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;
+	}
+	Timer->CR1 &= ~TIM_CR1_OPM;
 	// On met la valeur d'auto-reload dans le registre correspondant
 	Timer->ARR = Arr;
 	// Active la sortie du prescaler CK_CNT
