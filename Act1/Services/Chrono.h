@@ -12,10 +12,6 @@ Utilise la lib MyTimers.h /.c
 #include "stm32f103xb.h" 
 
 
-void (*pTIM1_handler)(void);
-void (*pTIM2_handler)(void);
-void (*pTIM3_handler)(void);
-void (*pTIM4_handler)(void);
 
 // Type de donnée utilisé dans le module
 

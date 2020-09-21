@@ -21,19 +21,7 @@
 #include "stm32f1xx_ll_system.h" // utile dans la fonction SystemClock_Config
 
 #include "Chrono.h"
-void TIM1_handler() {
-	int test = 0;
-}
-void TIM2_handler() {
-	int test = 0;
-}
-void TIM3_handler() {
-	int test = 0;
-}
-void TIM4_handler() {
-	int test = 0;
-}
-pTIM1_handler = &TIM1_handler;
+
 void  SystemClock_Config(void);
 
 /* Private functions ---------------------------------------------------------*/
