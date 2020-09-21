@@ -4,13 +4,17 @@
  indispensable pour pouvoir adresser les registres des périphériques.
  Rem : OBLIGATION d'utiliser les définitions utiles contenues dans ce fichier (ex : TIM_CR1_CEN, RCC_APB1ENR_TIM2EN ...)
  pour une meilleure lisibilité du code.
-
  Pour les masques, utiliser également les définitions proposée
  Rappel : pour mettre à 1  , reg = reg | Mask (ou Mask est le représente le ou les bits à positionner à 1)
 				  pour mettre à 0  , reg = reg&~ Mask (ou Mask est le représente le ou les bits à positionner à 0)
  
 */ 
 #include "stm32f103xb.h" 
+
+void (*TIM1_handler_fct)(void);
+void (*TIM2_handler_fct)(void);
+void (*TIM3_handler_fct)(void);
+void (*TIM4_handler_fct)(void);
 
 void MyTimer_Start(TIM_TypeDef * Timer)
 {
@@ -88,4 +92,64 @@ void MyTimer_Conf(TIM_TypeDef * Timer,int Arr, int Psc) {
 	// Active la sortie du prescaler CK_CNT
 	Timer->CR1 |= TIM_CR1_CEN;
 	Timer->PSC = Psc;
+}
+void MyTimer_IT_Enable(TIM_TypeDef * Timer) {
+	if(Timer == TIM1) {
+		TIM1->DIER |= TIM_DIER_UIE;
+	}
+	else if (Timer == TIM2) {
+		TIM2->DIER |= TIM_DIER_UIE;
+	}
+	else if (Timer == TIM3) {
+		TIM3->DIER |= TIM_DIER_UIE;
+	}
+	else if (Timer == TIM4) {
+		TIM4->DIER |= TIM_DIER_UIE;
+	}
+	
+}
+void MyTimer_IT_Conf(TIM_TypeDef * Timer, void (*handler) (void),int priorite) {
+	if(Timer == TIM1) {
+		TIM1->DIER |= TIM_DIER_CC1IE;
+		NVIC->ISER[0] |= 1 << 27;
+		NVIC->IP[27] = priorite;
+		TIM1_handler_fct = handler;
+	}
+	else if (Timer == TIM2) {
+		TIM2->DIER |= TIM_DIER_CC1IE;
+		NVIC->ISER[0] |= 1 << 28;
+		NVIC->IP[28] = priorite;
+		TIM2_handler_fct = handler;
+	}
+	else if (Timer == TIM3) {
+		TIM3->DIER |= TIM_DIER_CC1IE;
+		NVIC->ISER[0] |= 1 << 29;
+		NVIC->IP[29] = priorite;
+		TIM3_handler_fct = handler;
+	}
+	else if (Timer == TIM4) {
+		TIM4->DIER |= TIM_DIER_CC1IE;
+		NVIC->ISER[0] |= 1 << 30;
+		NVIC->IP[30] = priorite;
+		TIM4_handler_fct = handler;
+	}
+}
+
+void TIM1_UP_IRQHandler(void) {
+	(*TIM1_handler_fct)();
+	//page 345
+	TIM1->SR &= ~TIM_SR_UIF;
+	
+}
+void TIM2_IRQHandler(void) {
+	(*TIM2_handler_fct)();
+	TIM2->SR &= ~TIM_SR_UIF;
+}
+void TIM3_IRQHandler(void) {
+	(*TIM3_handler_fct)();
+	TIM3->SR &= ~TIM_SR_UIF;
+}
+void TIM4_IRQHandler(void) {
+	(*TIM4_handler_fct)();
+	TIM4->SR &= ~TIM_SR_UIF;
 }
