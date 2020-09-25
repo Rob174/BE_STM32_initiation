@@ -25,7 +25,15 @@
 void  SystemClock_Config(void);
 
 /* Private functions ---------------------------------------------------------*/
-
+void config_io() {
+	//bouton
+	//Configure le mode
+	GPIOA->CRH &= ~ GPIO_CRH_CNF8; ; // IN car GPIO_CRL_MODE0_1 = 0000... 11 (à l'endroit du mode) ...000
+	GPIOA->CRH |= GPIO_CRH_CNF8_1; // Floating..
+	// led
+	GPIOA->CRH |= GPIO_CRH_MODE10_0; // OUT max speed 10 MHz.
+	GPIOA->CRH &= ~GPIO_CRH_CNF10_1; // Push-pull	
+}
 /**
   * @brief  Main program
   * @param  None
@@ -47,6 +55,14 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
+		if ((GPIOA->IDR & GPIO_IDR_IDR8_Msk) > 0)
+		{
+			GPIOA->ODR |= GPIO_ODR_ODR10_Msk;
+		}
+		else
+		{
+			GPIOA->ODR &= ~GPIO_ODR_ODR10_Msk;
+		}
   }
 }
 
