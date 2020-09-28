@@ -26,16 +26,24 @@ void  SystemClock_Config(void);
 
 /* Private functions ---------------------------------------------------------*/
 void config_io_out_push_pull() {
-	//bouton
+	
+	// Configurer le clock
+	RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
+	
+	//bouton	
 	//Configure le mode
-	GPIOC->CRH &= ~ GPIO_CRH_CNF8; ; // IN car GPIO_CRL_MODE0_1 = 0000... 11 (à l'endroit du mode) ...000
+	GPIOC->CRH &= ~ GPIO_CRH_CNF8; // IN car GPIO_CRL_MODE0_1 = 0000... 11 (à l'endroit du mode) ...000
 	GPIOC->CRH |= GPIO_CRH_CNF8_0; // Floating..
 	// led
 	GPIOC->CRH |= GPIO_CRH_MODE10_0; // OUT max speed 10 MHz.
-	GPIOC->CRH &= ~GPIO_CRH_CNF10_1; // Push-pull	
+	GPIOC->CRH &= ~GPIO_CRH_CNF10_0; // Push-pull	
+	GPIOC->CRH &= ~GPIO_CRH_CNF10_1; // Push-pull
 }
 void config_io_out_open_drain() {
 	//bouton
+	// Configurer le clock
+	RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
+	
 	//Configure le mode
 	GPIOC->CRH &= ~ GPIO_CRH_CNF8; ; // IN car GPIO_CRL_MODE0_1 = 0000... 11 (à l'endroit du mode) ...000
 	GPIOC->CRH |= GPIO_CRH_CNF8_0; // Floating..
@@ -52,7 +60,10 @@ int main(void)
 {
   /* Configure the system clock to 72 MHz */
   SystemClock_Config();
-
+	
+	config_io_out_push_pull();
+	//config_io_out_open_drain();
+	
   /* Add your application code here */
   // Configuration chronomètre
 	Chrono_Conf(TIM2);
