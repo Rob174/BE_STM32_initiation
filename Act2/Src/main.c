@@ -25,14 +25,23 @@
 void  SystemClock_Config(void);
 
 /* Private functions ---------------------------------------------------------*/
-void config_io() {
+void config_io_out_push_pull() {
 	//bouton
 	//Configure le mode
-	GPIOA->CRH &= ~ GPIO_CRH_CNF8; ; // IN car GPIO_CRL_MODE0_1 = 0000... 11 (à l'endroit du mode) ...000
-	GPIOA->CRH |= GPIO_CRH_CNF8_1; // Floating..
+	GPIOC->CRH &= ~ GPIO_CRH_CNF8; ; // IN car GPIO_CRL_MODE0_1 = 0000... 11 (à l'endroit du mode) ...000
+	GPIOC->CRH |= GPIO_CRH_CNF8_0; // Floating..
 	// led
-	GPIOA->CRH |= GPIO_CRH_MODE10_0; // OUT max speed 10 MHz.
-	GPIOA->CRH &= ~GPIO_CRH_CNF10_1; // Push-pull	
+	GPIOC->CRH |= GPIO_CRH_MODE10_0; // OUT max speed 10 MHz.
+	GPIOC->CRH &= ~GPIO_CRH_CNF10_1; // Push-pull	
+}
+void config_io_out_open_drain() {
+	//bouton
+	//Configure le mode
+	GPIOC->CRH &= ~ GPIO_CRH_CNF8; ; // IN car GPIO_CRL_MODE0_1 = 0000... 11 (à l'endroit du mode) ...000
+	GPIOC->CRH |= GPIO_CRH_CNF8_0; // Floating..
+	// led
+	GPIOC->CRH |= GPIO_CRH_MODE10_0; // OUT max speed 10 MHz.
+	GPIOC->CRH |= GPIO_CRH_CNF10_0; // Push-pull	
 }
 /**
   * @brief  Main program
@@ -55,13 +64,13 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-		if ((GPIOA->IDR & GPIO_IDR_IDR8_Msk) > 0)
+		if (!((GPIOC->IDR & GPIO_IDR_IDR8_Msk) > 0))
 		{
-			GPIOA->ODR |= GPIO_ODR_ODR10_Msk;
+			GPIOC->ODR |= GPIO_ODR_ODR10_Msk;
 		}
 		else
 		{
-			GPIOA->ODR &= ~GPIO_ODR_ODR10_Msk;
+			GPIOC->ODR &= ~GPIO_ODR_ODR10_Msk;
 		}
   }
 }
