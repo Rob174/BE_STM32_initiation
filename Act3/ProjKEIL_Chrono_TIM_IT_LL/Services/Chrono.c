@@ -10,15 +10,68 @@ Utilise la lib MyTimers.h /.c
 
 #include "Chrono.h"
 #include "MyTimer.h"
+#include "stm32f1xx_ll_gpio.h"
+#define ETAT_STOP 0
+#define ETAT_START 1
+#define ETAT_RESET 2
 
 // variable privée de type Time qui mémorise la durée mesurée
 static Time Chrono_Time; // rem : static rend la visibilité de la variable Chrono_Time limitée à ce fichier 
 
 // variable privée qui mémorise pour le module le timer utilisé par le module
 static TIM_TypeDef * Chrono_Timer=TIM1; // init par défaut au cas où l'utilisateur ne lance pas Chrono_Conf avant toute autre fct.
+static int etat = ETAT_STOP;
 
-// déclaration callback appelé toute les 10ms
-void Chrono_Task_10ms(void);
+/**
+	* @brief  incrémente la variable privée Chron_Time modulo 60mn 
+  * @note   
+	* @param  Aucun
+  * @retval Aucun
+  */
+void Chrono_Task_10ms(void)
+{ 
+	Chrono_Time.Hund++;
+	if (Chrono_Time.Hund==100)
+	{
+		Chrono_Time.Sec++;
+		Chrono_Time.Hund=0;
+		LL_GPIO_TogglePin(GPIOC,LL_GPIO_PIN_10);
+	}
+	if (Chrono_Time.Sec==60)
+	{
+		Chrono_Time.Min++;
+		Chrono_Time.Sec=0;
+	}
+	if (Chrono_Time.Min==60)
+	{
+		Chrono_Time.Hund=0;
+	}
+}
+void Chrono_Conf_io(void) {
+	//bouton USER : START / STOP
+	LL_GPIO_SetPinMode(GPIOC,LL_GPIO_PIN_13,LL_GPIO_MODE_FLOATING);
+	//bouton Exterieur : RESET
+	LL_GPIO_SetPinMode(GPIOC,LL_GPIO_PIN_8,LL_GPIO_MODE_FLOATING);
+	// LED
+	LL_GPIO_SetPinMode(GPIOC,LL_GPIO_PIN_10,LL_GPIO_MODE_OUTPUT_10MHz);
+	LL_GPIO_SetPinOutputType(GPIOC,LL_GPIO_PIN_10,LL_GPIO_OUTPUT_PUSHPULL);
+}
+void Chrono_Background(void) {
+	if(LL_GPIO_IsPinLocked(GPIOC,LL_GPIO_PIN_13)) {
+		if (etat == ETAT_STOP) {
+			etat = ETAT_START;
+			Chrono_Start();
+		}
+		else if (etat == ETAT_START) {
+			etat = ETAT_STOP;
+			Chrono_Stop();
+		}
+		else {
+			etat = ETAT_STOP;
+			Chrono_Reset();
+		}
+	}
+}
 
 /**
 	* @brief  Configure le chronomètre. 
@@ -45,7 +98,9 @@ void Chrono_Conf(TIM_TypeDef * Timer)
 	// Validation IT
 	MyTimer_IT_Enable(Chrono_Timer);
 	
-	
+	//Configuration des 3 ios (2BP + LED)
+	Chrono_Conf_io();
+	//Tâche de fond à exécuter dans le while 
 }
 
 
@@ -101,34 +156,4 @@ Time * Chrono_Read(void)
 {
 	return &Chrono_Time;
 }
-
-
-
-
-/**
-	* @brief  incrémente la variable privée Chron_Time modulo 60mn 
-  * @note   
-	* @param  Aucun
-  * @retval Aucun
-  */
-void Chrono_Task_10ms(void)
-{ 
-	Chrono_Time.Hund++;
-	if (Chrono_Time.Hund==100)
-	{
-		Chrono_Time.Sec++;
-		Chrono_Time.Hund=0;
-	}
-	if (Chrono_Time.Sec==60)
-	{
-		Chrono_Time.Min++;
-		Chrono_Time.Sec=0;
-	}
-	if (Chrono_Time.Min==60)
-	{
-		Chrono_Time.Hund=0;
-	}
-	
-}
-
 
