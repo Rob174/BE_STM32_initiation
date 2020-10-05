@@ -32,8 +32,8 @@ void config_io_out_push_pull() {
 	
 	//bouton	
 	//Configure le mode
-	GPIOC->CRH &= ~ GPIO_CRH_CNF8; // IN car GPIO_CRL_MODE0_1 = 0000... 11 (à l'endroit du mode) ...000
-	GPIOC->CRH |= GPIO_CRH_CNF8_0; // Floating..
+	GPIOC->CRH &= ~ GPIO_CRH_CNF13; // IN car GPIO_CRL_MODE0_1 = 0000... 11 (à l'endroit du mode) ...000
+	GPIOC->CRH |= GPIO_CRH_CNF13_0; // Floating..
 	// led
 	GPIOC->CRH |= GPIO_CRH_MODE10_0; // OUT max speed 10 MHz.
 	GPIOC->CRH &= ~GPIO_CRH_CNF10_0; // Push-pull	
@@ -45,8 +45,8 @@ void config_io_out_open_drain() {
 	RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
 	
 	//Configure le mode
-	GPIOC->CRH &= ~ GPIO_CRH_CNF8; ; // IN car GPIO_CRL_MODE0_1 = 0000... 11 (à l'endroit du mode) ...000
-	GPIOC->CRH |= GPIO_CRH_CNF8_0; // Floating..
+	GPIOC->CRH &= ~ GPIO_CRH_CNF13; ; // IN car GPIO_CRL_MODE0_1 = 0000... 11 (à l'endroit du mode) ...000
+	GPIOC->CRH |= GPIO_CRH_CNF13_0; // Floating..
 	// led
 	GPIOC->CRH |= GPIO_CRH_MODE10_0; // OUT max speed 10 MHz.
 	GPIOC->CRH |= GPIO_CRH_CNF10_0; // Push-pull	
