@@ -8,3 +8,5 @@ nucleo-f103rb\chrono.o: C:\Users\Robin\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\C
 nucleo-f103rb\chrono.o: C:\Users\Robin\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h
 nucleo-f103rb\chrono.o: ..\Inc\system_stm32f1xx.h
 nucleo-f103rb\chrono.o: ..\MyDrivers\MyTimer.h
+nucleo-f103rb\chrono.o: ..\LLDrivers\inc\stm32f1xx_ll_gpio.h
+nucleo-f103rb\chrono.o: ..\Inc\stm32f1xx.h

@@ -20,7 +20,7 @@ static Time Chrono_Time; // rem : static rend la visibilité de la variable Chron
 
 // variable privée qui mémorise pour le module le timer utilisé par le module
 static TIM_TypeDef * Chrono_Timer=TIM1; // init par défaut au cas où l'utilisateur ne lance pas Chrono_Conf avant toute autre fct.
-static int etat = ETAT_STOP;
+static int etat = ETAT_RESET;
 
 /**
 	* @brief  incrémente la variable privée Chron_Time modulo 60mn 
@@ -35,7 +35,8 @@ void Chrono_Task_10ms(void)
 	{
 		Chrono_Time.Sec++;
 		Chrono_Time.Hund=0;
-		LL_GPIO_TogglePin(GPIOC,LL_GPIO_PIN_10);
+		if (etat == ETAT_START)
+			LL_GPIO_TogglePin(GPIOC,LL_GPIO_PIN_10);
 	}
 	if (Chrono_Time.Sec==60)
 	{
@@ -57,8 +58,8 @@ void Chrono_Conf_io(void) {
 	LL_GPIO_SetPinOutputType(GPIOC,LL_GPIO_PIN_10,LL_GPIO_OUTPUT_PUSHPULL);
 }
 void Chrono_Background(void) {
-	if(LL_GPIO_IsPinLocked(GPIOC,LL_GPIO_PIN_13)) {
-		if (etat == ETAT_STOP) {
+	if(LL_GPIO_IsInputPinSet(GPIOC,LL_GPIO_PIN_13)) {
+		if (etat == ETAT_RESET) {
 			etat = ETAT_START;
 			Chrono_Start();
 		}
@@ -66,10 +67,10 @@ void Chrono_Background(void) {
 			etat = ETAT_STOP;
 			Chrono_Stop();
 		}
-		else {
-			etat = ETAT_STOP;
-			Chrono_Reset();
-		}
+	}
+	if(LL_GPIO_IsInputPinSet(GPIOC,LL_GPIO_PIN_8)) {
+		etat = ETAT_RESET;
+		Chrono_Reset();
 	}
 }
 
@@ -100,7 +101,6 @@ void Chrono_Conf(TIM_TypeDef * Timer)
 	
 	//Configuration des 3 ios (2BP + LED)
 	Chrono_Conf_io();
-	//Tâche de fond à exécuter dans le while 
 }
 
 

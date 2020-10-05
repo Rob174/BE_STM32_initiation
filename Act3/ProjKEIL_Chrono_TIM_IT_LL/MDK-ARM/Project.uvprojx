@@ -427,6 +427,11 @@
               <FileType>1</FileType>
               <FilePath>..\LLDrivers\src\stm32f1xx_ll_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f1xx_ll_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LLDrivers\inc\stm32f1xx_ll_gpio.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -468,7 +473,7 @@
       <TargetName>Simulateur</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060422::V5.06 update 4 (build 422)::ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -884,6 +889,11 @@
               <FileName>stm32f1xx_ll_tim.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LLDrivers\src\stm32f1xx_ll_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_ll_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LLDrivers\inc\stm32f1xx_ll_gpio.h</FilePath>
             </File>
           </Files>
         </Group>
