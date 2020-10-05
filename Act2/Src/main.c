@@ -75,7 +75,7 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-		if (!((GPIOC->IDR & GPIO_IDR_IDR8_Msk) > 0))
+		if (!((GPIOC->IDR & GPIO_IDR_IDR13_Msk) > 0))
 		{
 			GPIOC->ODR |= GPIO_ODR_ODR10_Msk;
 		}

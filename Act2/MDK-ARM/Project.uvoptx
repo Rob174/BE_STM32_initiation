@@ -159,14 +159,14 @@
           <Type>0</Type>
           <LineNumber>80</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134219368</Address>
+          <Address>134218644</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>C:\Users\smani\Desktop\ETUDES\INSA\4A IR\S1\Info mat microcontrÃ´leurs\TP\BE_STM32_initiation\Act2\Src\main.c</Filename>
+          <Filename>U:\Documents\4A IR\Info mat microcontrÃ´leurs\TP\BE_STM32_initiation\Act2\Src\main.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\NUCLEO_F103RB\../Src/main.c\80</Expression>
         </Bp>
@@ -175,32 +175,16 @@
           <Type>0</Type>
           <LineNumber>84</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134219382</Address>
+          <Address>134218658</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>C:\Users\smani\Desktop\ETUDES\INSA\4A IR\S1\Info mat microcontrÃ´leurs\TP\BE_STM32_initiation\Act2\Src\main.c</Filename>
+          <Filename>U:\Documents\4A IR\Info mat microcontrÃ´leurs\TP\BE_STM32_initiation\Act2\Src\main.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\NUCLEO_F103RB\../Src/main.c\84</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>48</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134218098</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>C:\Users\smani\Desktop\ETUDES\INSA\4A IR\S1\Info mat microcontrÃ´leurs\TP\BE_STM32_initiation\Act2\Services\Chrono.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\NUCLEO_F103RB\../Services/Chrono.c\48</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
