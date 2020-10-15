@@ -19,6 +19,7 @@
 #include "stm32f1xx_ll_rcc.h" // utile dans la fonction SystemClock_Config
 #include "stm32f1xx_ll_utils.h"   // utile dans la fonction SystemClock_Config
 #include "stm32f1xx_ll_system.h" // utile dans la fonction SystemClock_Config
+#include "stm32f1xx_ll_usart.h"
 
 #include "Chrono.h"
 
@@ -67,10 +68,12 @@ int main(void)
   /* Add your application code here */
   // Configuration chronomètre
 	Chrono_Conf(TIM2);
+
+	config_USART(USART2);
 	
 	// Lancement chronomètre
 	Chrono_Start(); 
-
+	
   
   /* Infinite loop */
   while (1)

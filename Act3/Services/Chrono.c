@@ -8,6 +8,7 @@ Utilise la lib MyTimers.h /.c
 
 
 
+#include "stm32f1xx_ll_usart.h"
 #include "Chrono.h"
 #include "MyTimer.h"
 
@@ -19,6 +20,11 @@ static TIM_TypeDef * Chrono_Timer=TIM1; // init par défaut au cas où l'utilisate
 
 // déclaration callback appelé toute les 10ms
 void Chrono_Task_10ms(void);
+
+USART_TypeDef * USARTx_used;
+LL_USART_InitTypeDef init_usart_struct = {19200, LL_USART_DATAWIDTH_8B,
+							LL_USART_STOPBITS_1,LL_USART_PARITY_EVEN,
+							LL_USART_DIRECTION_TX_RX,LL_USART_HWCONTROL_NONE};
 
 /**
 	* @brief  Configure le chronomètre. 
@@ -105,6 +111,22 @@ Time * Chrono_Read(void)
 }
 
 
+void config_USART(USART_TypeDef * USARTx) {
+		//Allumer l'horloge
+		if (USARTx == USART1)
+			RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
+		else if (USARTx == USART2)
+			RCC->APB1ENR |= RCC_APB1ENR_USART2EN;
+		else if (USARTx == USART3)
+			RCC->APB1ENR |= RCC_APB1ENR_USART3EN;
+		GPIOA->CRL |= GPIO_CRL_MODE2_1; // OUT max speed 10 MHz.
+		GPIOA->CRL |= GPIO_CRL_CNF2_1; // Push-pull
+		// Config clock
+		LL_USART_Init(USARTx,&init_usart_struct);
+		// Enable USART
+		LL_USART_Enable(USARTx);
+		USARTx_used = USARTx;
+}
 
 
 /**
@@ -115,21 +137,54 @@ Time * Chrono_Read(void)
   */
 void Chrono_Task_10ms(void)
 {
+	char trame[11];
+	trame[2] = 0x3a;
+	trame[5] = 0x3a;
+	trame[8] = 0x3a;
+	trame[9] = 0x0d;
+	trame[10] = '\0';
 	Chrono_Time.Hund++;
 	if (Chrono_Time.Hund==100)
 	{
 		Chrono_Time.Sec++;
+		if (Chrono_Time.Sec < 10) {
+			trame[3] = 0x30;
+			trame[4] = Chrono_Time.Sec + 0x30;
+		}
+		else {
+			trame[3] = Chrono_Time.Sec / 10 + 0x30;
+			trame[4] = Chrono_Time.Sec % 10 + 0x30;
+		}
+		
 		Chrono_Time.Hund=0;
 	}
 	if (Chrono_Time.Sec==60)
 	{
 		Chrono_Time.Min++;
 		Chrono_Time.Sec=0;
+		if (Chrono_Time.Min < 10) {
+			trame[0] = 0x30;
+			trame[1] = Chrono_Time.Min + 0x30;
+		}
+		else {
+			trame[0] = Chrono_Time.Min / 10 + 0x30;
+			trame[1] = Chrono_Time.Min % 10 + 0x30;
+		}
 	}
 	if (Chrono_Time.Min==60)
 	{
 		Chrono_Time.Hund=0;
 	}
+	if (Chrono_Time.Hund < 10) {
+		trame[6] = 0x30;
+		trame[7] = Chrono_Time.Hund + 0x30;
+	}
+	else {
+		trame[6] = Chrono_Time.Hund / 10 + 0x30;
+		trame[7] = Chrono_Time.Hund % 10 + 0x30;
+	}
+	for (int i = 0; i <11;i++)
+		LL_USART_TransmitData8(USARTx_used,trame[i]);
 	
 }
 

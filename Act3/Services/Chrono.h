@@ -10,6 +10,7 @@ Utilise la lib MyTimers.h /.c
 */
 
 #include "stm32f103xb.h" 
+#include "stm32f1xx_ll_usart.h"
 
 
 
@@ -67,5 +68,5 @@ void Chrono_Reset(void);
   * @retval adresse de la variable Time
   */
 Time * Chrono_Read(void);
-
+void config_USART(USART_TypeDef * USARTx);
 #endif

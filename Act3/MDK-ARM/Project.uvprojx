@@ -10,7 +10,7 @@
       <TargetName>NUCLEO-F103RB</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::.\ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -426,6 +426,16 @@
               <FileName>stm32f1xx_ll_utils.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LLDrivers\src\stm32f1xx_ll_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_ll_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\ProjKEIL_Chrono_TIM_IT_LL\LLDrivers\inc\stm32f1xx_ll_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_ll_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ProjKEIL_Chrono_TIM_IT_LL\LLDrivers\src\stm32f1xx_ll_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -468,7 +478,7 @@
       <TargetName>Simulateur</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::.\ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -884,6 +894,16 @@
               <FileName>stm32f1xx_ll_utils.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LLDrivers\src\stm32f1xx_ll_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_ll_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\ProjKEIL_Chrono_TIM_IT_LL\LLDrivers\inc\stm32f1xx_ll_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_ll_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ProjKEIL_Chrono_TIM_IT_LL\LLDrivers\src\stm32f1xx_ll_usart.c</FilePath>
             </File>
           </Files>
         </Group>
